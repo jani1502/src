@@ -1,0 +1,5 @@
+projectKey=com.jani:janakiLogin
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/com.jani:janakiLogin
+ceTaskId=AWsgFOzv-c_Ph3vejq5M
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AWsgFOzv-c_Ph3vejq5M
