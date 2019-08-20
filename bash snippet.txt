@@ -1,0 +1,1159 @@
+Here is a set of small scripts, which demonstrate some features of
+bash programming. These are the building blocks of Bash Programming. 
+
+Type these snippets again and again to get comfortable. 
+
+
+//===================================================================================
+// 1.set new prompt
+//===================================================================================
+
+PS1=">"
+PS1="[${LOGNAME}@$(hostname)] # "
+PS1="[${LOGNAME}] # "
+PS1='$PWD $ '
+
+
+//===================================================================================
+// 2.set (and automatically create) shell variable
+//===================================================================================
+
+$ test="test"
+
+$ homedir='pwd'
+
+string="The man said \" hello \"."
+
+
+//===================================================================================
+//3. To use the variable within the shell, it is preceded by a $
+//===================================================================================
+homedir=$HOME
+cd $homedir
+
+
+//===================================================================================
+// 4.how to print shell variable
+//===================================================================================
+
+echo PS1
+
+echo $PS1
+
+echo $USERNAME
+
+
+//===================================================================================
+// 5.predefined shell variables
+//===================================================================================
+HOME    name of users login directory
+IFS     internal field separators
+PATH    search path used for finding commands
+PS1     shell prompt
+OSTYPE
+USERNAME
+SHELL 
+
+
+//===================================================================================
+// 6.The shell supports pattern matching
+//===================================================================================
+* Match all characters in a string 
+? Match a single character
+
+ls *.dat
+
+
+//===================================================================================
+//7. Command Substitution
+//===================================================================================
+today=`date`
+
+
+//===================================================================================
+#---------------------------------------------------
+# 8.empty sh script program
+#---------------------------------------------------
+#!/bin/sh
+
+
+#---------------------------------------------------
+# 9.comments
+#---------------------------------------------------
+#!/bin/sh
+# this is comment
+
+
+#---------------------------------------------------
+# 10.printing of string constant
+#---------------------------------------------------
+#!/bin/sh
+echo 'hello'
+echo "hello"
+echo hello
+
+
+#---------------------------------------------------
+#11. declaration and printing of string variable
+#---------------------------------------------------
+#!/bin/sh
+
+x='Wonderful new World'
+echo $x
+echo x # just string 'x'
+
+
+
+#---------------------------------------------------
+#12. call of other programs
+#---------------------------------------------------
+#!/bin/sh
+ls
+
+
+#---------------------------------------------------
+# 13.indirect call of other programs
+#---------------------------------------------------
+#!/bin/sh
+
+x='pwd'
+$x
+
+x='ls -l'
+$x
+
+
+#---------------------------------------------------
+#14. indirect call with indirect parameters
+#---------------------------------------------------
+#!/bin/sh
+u='-l'
+
+x='ls '
+
+$x $u
+
+
+#---------------------------------------------------
+#15. print current shell name ???
+#---------------------------------------------------
+#!/bin/sh
+
+echo $SHELL
+
+
+#---------------------------------------------------
+#16. Anything enclosed in double quotes is passed on exactly 
+# as presented with the exception that the values of 
+# shell variables are substituted
+#---------------------------------------------------
+#!/bin/sh
+
+v1="abc "
+v2="$v1 d"
+echo $v1 $v2
+
+
+#---------------------------------------------------
+#17. Any matter enclosed in single quotes is passed on 
+# exactly as presented. The values of shell variables 
+# are not substituted. 
+#---------------------------------------------------
+#!/bin/sh
+
+v1="abc"
+v2='$v1 d'
+echo $v1 $v2
+
+
+#---------------------------------------------------
+#18. Back quotes are used to enclose commands. An item
+# enclosed in back quotes is replaced by the standard
+# output of the command. Shell variable values
+# are substituted within back quotes.
+#---------------------------------------------------
+#!/bin/sh
+
+date=`date`
+echo the date is $date
+
+
+#---------------------------------------------------
+#19. escaping
+#---------------------------------------------------
+#!/bin/sh
+
+msg=`echo Your Current Directory is \`pwd\``
+
+echo $msg
+
+
+#---------------------------------------------------
+#20. reading of text line from keyboard
+#---------------------------------------------------
+#!/bin/sh
+
+read x
+
+echo $x
+echo $x
+
+
+#---------------------------------------------------
+#21. reading of text line from keyboard with help comment
+# echo without new line at the end
+#---------------------------------------------------
+#!/bin/sh
+
+echo -n "Input text line=? "
+read x
+
+echo $x
+echo $x
+
+
+#---------------------------------------------------
+#22. syntax:  many commands in one line !!!!
+#---------------------------------------------------
+#!/bin/sh
+
+echo "a"; echo "b"; echo "c"
+
+var=5; echo `expr $var + $var` 
+
+
+#---------------------------------------------------
+#23. integer variable and its increment
+# does not works in sh !!!
+#---------------------------------------------------
+#!/bin/bash
+
+var=12345
+let var=$var+1 # let is important
+echo $var
+
+v=12345
+v=$v+1 # result "12345+1"
+
+
+#---------------------------------------------------
+#24. integer arithmetics - bash only !
+#---------------------------------------------------
+#!/bin/bash
+
+echo 'number=?' ; read x
+
+let y=$x+$x ; echo 'x+x=' $y
+
+let y=$x*$x ; echo 'square=' $y
+
+let y=$x/3 ; echo 'x/3=' $y
+
+let y=$x%7 ; echo 'x%7=' $y
+
+
+#---------------------------------------------------
+#25. integer arithmetics in sh !!! using expr - slow
+#---------------------------------------------------
+#!/bin/sh
+
+a=123
+b=12
+
+c=`expr $a + $b` # addition
+echo $c
+
+c=`expr $a \* $b` # multiplication
+echo $c
+
+c=`expr $a / $b` # division
+echo $c
+
+c=`expr $a % $b` # residual
+echo $c
+
+
+#---------------------------------------------------
+#26. very simple 'if' 
+#---------------------------------------------------
+#!/bin/sh
+
+echo 'number=?'
+read x
+
+if [ $x -eq 5 ]
+then
+	echo "five"
+fi	
+
+
+#---------------------------------------------------
+#27 if ... else
+#---------------------------------------------------
+#!/bin/sh
+
+echo 'number=?'
+read x
+
+if [ $x -eq 5 ]
+then
+	echo "five"
+else
+	echo "not 5"	
+fi	
+
+
+#---------------------------------------------------
+#28 if ... elif ... else
+#---------------------------------------------------
+#!/bin/sh
+
+echo 'number=?'
+read x
+
+if [ $x -eq 5 ]
+then
+	echo "five"
+elif [ $x -eq 7 ]
+then
+	echo "seven"	
+else
+	echo "not 5 and not 7"	
+fi	
+
+
+#---------------------------------------------------
+#29 comparison -lt  and  -gt, nested if
+#---------------------------------------------------
+#!/bin/sh
+
+echo -n 'number=?'
+read x
+
+if [ $x -gt 0 ]
+then
+	if [ $x -lt 10 ]
+	then
+		echo "0 < x < 10"
+	fi
+fi
+
+
+#---------------------------------------------------
+#30 while loop - print first 10 integers from 0
+#---------------------------------------------------
+#!/bin/bash
+
+x=0
+
+while  [ $x -lt 10 ]
+do
+	echo $x
+	let x=$x+1
+done
+
+
+#---------------------------------------------------
+#31 10 random numbers generation
+#---------------------------------------------------
+#!/bin/bash
+
+i=0
+while [ $i -lt 10 ]
+do
+	x=$RANDOM
+	echo $x
+	let i=$i+1
+done
+
+
+#---------------------------------------------------
+#32 endless loop: interrupting by ctrl-c
+#---------------------------------------------------
+#!/bin/sh
+
+while [ 1 ]
+do
+	read x
+	echo $x$x
+done
+
+
+#---------------------------------------------------
+#33 divisors of integer number
+#---------------------------------------------------
+#!/bin/bash
+
+echo -n 'number=?'
+read x
+
+i=2 # possible divisor
+k=1
+let n=$x/2 # top limit for divisor
+
+while [ $i -le $n ]
+do
+	let k=$x%$i # residual
+	if [ $k -eq 0 ]
+	then
+		echo -n "Divisor= "
+		echo $i
+	if
+	let i=$i+1
+done
+
+
+#---------------------------------------------------
+#34 simple use of  for ... in ...
+#---------------------------------------------------
+#!/bin/sh
+
+for i in "abc" "xyz" 1 2 99
+do
+	echo $i
+done
+
+
+#---------------------------------------------------
+#35 use for as in C-programming
+# sum of the first n integer numbers
+#---------------------------------------------------
+#!/bin/bash
+
+echo -n "number=?"
+read n
+
+s=0 # here sum
+
+for((i=1; i <=n ; i++))
+do
+	let s=$s+$i 
+done
+
+echo "sum= "$s
+
+
+#---------------------------------------------------
+#36 operator case for selection of logical branches
+# end marker ;; of branch
+#---------------------------------------------------
+#!/bin/sh
+
+echo "input string=?"
+read str
+
+case "$str" in
+	abc) echo "string = abc" 
+		;;
+	xyz) echo "string = xyz" 
+		;;
+	*)   echo "not abc, not zyz" ;;
+esac
+
+
+#---------------------------------------------------
+#37 exit operator
+#---------------------------------------------------
+#!/bin/sh
+
+while [ 1 ]
+do
+	read x
+	echo $x
+	if [ $x -eq 0 ] # in $x must be number!
+	then
+		echo "script done ..."
+		exit 0
+	fi
+done
+
+
+#---------------------------------------------------
+#38 string comparing
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Input string=?"
+read str
+
+if [ $str = "abc" ]
+then
+	echo "You got it!"
+else
+	echo "Its not 'abc'"
+fi
+
+
+#---------------------------------------------------
+#39 simple strings concatenation
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Input string=?"
+read str
+
+s2=$str"AAAA"
+echo $s2
+
+s3="XXX"$s2
+echo $s3
+
+
+#---------------------------------------------------
+#40 strings concatenation
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Input string=?"
+read str1
+
+echo "Input second string=?"
+read str2
+
+s3=$str1$str2 # it works!
+echo $s3
+
+s4=${str1}${str2} # it works too!
+echo $s4
+
+
+#---------------------------------------------------
+#41 testing whether a string is null
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Input string=?"
+read str
+
+if [ $str ]
+then
+	echo "Not empty"
+else
+	echo "Empty"
+fi
+
+
+#---------------------------------------------------
+#42 length of string
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Input string=?"
+read str
+
+leng=`expr length $str`
+echo "length= "$leng
+
+
+#---------------------------------------------------
+#43 how to insert string to constant string
+#---------------------------------------------------
+#!/bin/sh
+
+var="good"
+
+echo "This is $var test"
+
+
+#---------------------------------------------------
+#44 simplest function example
+#---------------------------------------------------
+#!/bin/sh
+
+#---------------------------
+func()
+{
+	echo "Inside function"
+}
+
+#---------------------------
+echo "Now function call..."
+func
+echo "end of main"
+
+
+#---------------------------------------------------
+#45 function can see variables of main program
+#---------------------------------------------------
+#!/bin/sh
+
+#--------------------------
+func()
+{
+	echo $var
+}
+#--------------------------
+
+var="test of global "
+func
+
+
+#---------------------------------------------------
+#46 pass of parameters to function
+#---------------------------------------------------
+#!/bin/sh
+
+#---------------------------------
+func()
+{
+	echo "We are in function now"
+	echo $0  # shell script name
+	echo $1  # first parameter
+	echo $2  # second parameter
+	echo "We leave function..."
+	exit 0
+}
+
+#---------------------------------
+
+func  123  "abc"
+
+
+#---------------------------------------------------
+#47 passing variable parameters
+#---------------------------------------------------
+#!/bin/bash
+
+#-------------------------------
+func2()
+{
+	let r=$1*$1
+	echo $r
+}
+#-------------------------------
+var=123
+func2 $var
+
+
+
+#---------------------------------------------------
+#48 recursive function example
+# calculation of factorial
+#---------------------------------------------------
+#!/bin/sh
+#-------------------------------
+factorial()
+{
+	if [ "$1" -gt "1" ]
+	then
+		i=`expr $1 - 1`
+		j=`factorial $i`
+		k=`expr $1 \* $j`
+		echo $k
+	else
+		echo 1
+	fi
+}
+#-------------------------------
+read x
+factorial $x
+
+
+
+#---------------------------------------------------
+#49 using of function library ????????
+#---------------------------------------------------
+
+file with name my.lb
+
+func2()
+{
+	echo $1$1
+}
+func3()
+{
+	echo $1$1$1
+}
+
+shell program:
+
+#!/bin/sh
+
+./my.lb
+
+var=123
+
+func2 123
+
+func3 123
+
+
+
+#---------------------------------------------------
+#50 floating point numbers
+#---------------------------------------------------
+#!/bin/sh
+
+# does not support !!!!
+
+
+#---------------------------------------------------
+#51 simpiest array : declaration, element access and assignment
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd)
+
+echo ${arr[0]} # curly bracket notation
+echo ${arr[1]}
+echo ${arr[2]}
+echo ${arr[3]}
+
+arr[2]="CCCCCCC"
+echo ${arr[2]}
+
+
+#---------------------------------------------------
+#52 number of elements in array
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd)
+
+n=${#arr[@]}
+echo $n
+
+
+#---------------------------------------------------
+#53 array with filenames of current directory
+#---------------------------------------------------
+#!/bin/sh
+
+arr=(*)  # * is list of all file and dir names
+
+n=${#arr[@]}
+echo "number of files and dirs "$n
+
+echo ${arr[0]}
+echo ${arr[1]}
+
+
+#---------------------------------------------------
+#54 print all array elements -not good
+# works then no holes in indexes
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd ee ff gg)
+n=${#arr[@]}
+i=0
+while test $i -lt $n
+do
+	echo ${arr[$i]}
+	let i=$i+1
+done
+
+
+#---------------------------------------------------
+#55 dynamic expansion of array
+# one array element in reality is couple (index, value)
+#---------------------------------------------------
+#!/bin/bash
+
+arr=()
+
+n=${#arr[@]}
+echo "number of array elements "$n
+
+arr[0]=a
+n=${#arr[@]}
+echo "number of array elements "$n
+
+arr[1]=b
+n=${#arr[@]}
+echo "number of array elements "$n
+
+arr[2]=c
+n=${#arr[@]}
+echo "number of array elements "$n
+
+arr[10]=h
+n=${#arr[@]}
+echo "number of array elements "$n
+
+
+echo ${arr[10]}
+
+echo ${arr[4]} # empty string
+echo ${arr[6]} # empty string
+
+
+#---------------------------------------------------
+#56 get all array and print it
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd ee ff gg)
+
+echo ${arr[*]} # all array
+
+echo ${arr[@]:0}   # aa bb cc dd ee ff gg
+
+echo ${arr[@]:1}   # bb cc dd ee ff gg
+
+echo ${arr[@]:2:3} # cc dd ee
+
+for i in ${arr[*]}
+do
+	echo $i
+done
+
+
+#---------------------------------------------------
+#57 adding element to array
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd ee ff gg)
+
+echo ${arr[*]}
+
+arr=( "${arr[@]}" "newElem" ) # from right
+
+echo ${arr[*]}
+
+arr=( "newElem" "${arr[@]}" ) # from left
+
+echo ${arr[*]}
+
+
+#---------------------------------------------------
+#58 move last element from array
+#---------------------------------------------------
+#!/bin/bash
+
+
+arr=(aa bb cc dd ee ff gg)
+
+echo ${arr[*]}
+
+unset arr[${#arr[@]}-1]	#  move last element
+echo ${arr[*]}
+
+
+#---------------------------------------------------
+#59 copying of array
+#---------------------------------------------------
+#!/bin/bash
+
+arr=(aa bb cc dd ee ff gg)
+
+echo ${arr[*]}
+
+arr2=( "${arr[@]}" )
+
+echo ${arr2[*]}
+
+
+#---------------------------------------------------
+#60 get substring from string
+#---------------------------------------------------
+#!/bin/bash
+
+echo "long string input=?"
+read st
+
+st2=${st:2:4}
+
+echo $st2
+
+
+#---------------------------------------------------
+#61 substring replacement "abc" to "xyz"
+#---------------------------------------------------
+#!/bin/bash
+
+echo "string input=?"
+read str
+
+st2=${str/abc/xyz} # only ones
+
+echo $st2
+
+
+#---------------------------------------------------
+#62 search of character 'a' in a string
+#---------------------------------------------------
+#!/bin/sh
+
+echo "string input=?"
+read str
+
+pos=`expr index $str a`
+
+echo "position of the first 'a' = "$pos
+
+
+#---------------------------------------------------
+#63 string list counting
+#---------------------------------------------------
+#!/bin/sh
+
+for i in aa bb cc dd ee ff gg hh
+do
+	echo $i
+done
+
+
+#---------------------------------------------------
+#64 command line arguments
+# separated by spaces
+#---------------------------------------------------
+#!/bin/sh
+
+echo $0  # script file name
+
+echo $1  # first argument
+echo $2  # second argument
+echo $3  # third argument
+
+
+#---------------------------------------------------
+#65 command line arguments without script name number
+# all command line without script name
+#---------------------------------------------------
+#!/bin/sh
+
+echo $#  # argument number
+
+echo $*  # command line
+
+echo $@
+
+
+
+#---------------------------------------------------
+#66 get all files and dir names
+#---------------------------------------------------
+#!/bin/sh
+
+echo *  # file and dir names of current dir
+
+for i in *
+do
+	echo $i
+done
+
+echo ../* # file and dir names of parent dir
+
+*/ just close comments
+
+
+#---------------------------------------------------
+#67 file search from root dir      ???????
+# file name - parameter from command line
+#---------------------------------------------------
+#!/bin/sh
+
+start=$HOME
+date
+find $start -name $1 -print
+
+
+#---------------------------------------------------
+#68 list of all files with extension .txt     !!!!!!
+#---------------------------------------------------
+#!/bin/sh
+
+echo *.txt
+
+
+#---------------------------------------------------
+#69 combine a set of text files in one file use
+# script >targetfile.lst , not txt-file !!!
+#---------------------------------------------------
+#!/bin/sh
+
+lst=*.txt
+
+for i in $lst
+do
+	echo
+	echo "======================================"
+	echo "File "$i
+	echo "======================================"
+	cat <$i
+done
+
+
+#---------------------------------------------------
+#70 create new file and write string to it
+# file name from command string - variable $1
+#---------------------------------------------------
+#!/bin/sh
+
+echo "String=?"
+read str
+
+echo $str >$1
+
+
+#---------------------------------------------------
+#71 read textlines from console and add them to file
+# file name from command string - variable $1
+#---------------------------------------------------
+#!/bin/sh
+
+echo "Add strings=?"
+str="1"
+
+while [ $str ]
+do
+	read str
+	echo $str >>$1
+done
+
+
+
+#---------------------------------------------------
+#72 read first string from text file
+#---------------------------------------------------
+#!/bin/sh
+
+read str <$1
+echo $str
+
+
+
+#---------------------------------------------------
+#73 text file reading
+# script res.txt
+#---------------------------------------------------
+#!/bin/sh
+
+str="1"
+
+while [ $str ]
+do
+	read str
+	echo $str
+	echo $str
+done
+
+
+
+74isRoot.sh
+====================================================
+isRoot()
+{
+# Make sure only root can run our script
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+}
+====================================================
+
+75 banner.sh
+====================================================
+#!/bin/bash
+#Clears screen automatically due to the uisage of EOF
+banner(){
+clear
+cat << "EOF"
+_   _
+| | | |
+| |_| | ___ _ __ _ __ ___   ___  ___
+|  _  |/ _ \ '__| '_ ` _ \ / _ \/ __|
+| | | |  __/ |  | | | | | |  __/\__ \
+\_| |_/\___|_|  |_| |_| |_|\___||___/
+SNMP framework created by AXANO
+EOF
+}
+===================================================
+
+76 whileloop.sh
+===================================================
+#!/bin/sh
+#
+#Script to test while statement
+#
+#
+if [ $# -eq 0 ]
+then
+   echo "Error - Number missing form command line argument"
+   echo "Syntax : $0 number"
+   echo " Use to print multiplication table for given number"
+exit 1
+fi
+n=$1
+i=1
+while [ $i -le 10 ]
+do
+  echo "$n * $i = `expr $i \* $n`"
+  i=`expr $i + 1`
+done
+===================================================
+
+77 check-range.sh
+===================================================
+#!/bin/bash
+# To check a number is in range or not
+if [ "$1" -gt 0 -a "$1" -lt 10 ]
+#if [[ "$1" =~ ^[0-9]+$ ]]; To Check input is a number
+then echo "Number is in Range 0-9";
+else echo "Number is not in Range 0-9";
+fi
+====================================================
+78
+sort_csv.sh
+==========================================================
+#!/bin/bash
+if [ "$2" != "" ]; then
+	head -n 1 "$1" && tail -n +2 "$1" | sort -t ',' -k "$2"
+else
+	head -n 1 "$1" && tail -n +2 "$1" | sort -t ',' -k 1
+fi
+
+==========================================================
+79
+function_available_command.sh
+==========================================================
+#!/usr/bin/env bash
+
+# This checks to see if a command is available on a linux system
+function is_command() {
+    if [ -x "$(command -v ${1})" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+## Examples
+#if is_command "yum" ; then
+#  echo "This is probably a Centos or Redhat box, because yum is it's package manager"
+#fi
+#
+#if is_command "pip" ; then
+#  echo "Python package installer exists pip"
+#fi
+
+==========================================================
+80 verify_root_user.sh
+==========================================================
+#!/usr/bin/env bash
+if [ $(whoami) != 'root' ]; then
+        echo "Must be root to run $0"
+        exit 1;
+fi
+==========================================================
+81 fuzz.sh
+==========================================================
+#!/usr/bin/env bash
+
+# fuzz.sh: sleep for a random amount of time (up to 15 seconds by default).
+# see https://github.com/pepaslabs/bash_scripts
+#
+# usage: fuzz.sh [seconds]
+#
+# add fuzz.sh to your crontab to prevent a group of machines from causing
+# a "stampeded":
+# 
+#   * * * * * fuzz.sh && script_which_is_run_by_a_bunch_of_machines.sh
+#
+# see also https://twitter.com/hmason/status/238417862992199680
+
+delay=${1:-15}
+sleep $(( ${RANDOM} % ${delay} ))
+===========================================================
